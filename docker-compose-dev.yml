@@ -1,0 +1,53 @@
+version: "3.9"
+services:
+    postgres:
+        image: postgres:13.1-alpine
+        restart: unless-stopped
+        ports:
+            - 6006:5432
+        volumes:
+            - pg-data:/var/lib/postgresql/data
+        environment:
+            TZ: Europe/Moscow
+            POSTGRES_PASSWORD: testdb
+            POSTGRES_USER: testdb
+            POSTGRES_DB: testdb
+#            POSTGRESQL_SHARED_PRELOAD_LIBRARIES: pgaudit, pg_stat_statements
+#        command: postgres -c shared_preload_libraries=pg_stat_statements -c pg_stat_statements.track=all -c pg_stat_statements.max=10000
+        healthcheck:
+            test: pg_isready -U diletantback
+#    ocean:
+#        image: ocean:latest
+#        depends_on:
+#            postgres:
+#                condition: service_healthy
+#        build:
+#            context: build/generated/sources/annotationProcessor/java/main
+#            network: host
+#            dockerfile: ./Dockerfile.dev
+#        restart: unless-stopped
+#        ports:
+#            - 80:8080
+#        volumes:
+#            - ./logs:/var/lib/diletantback/logs
+#            - spring-data:/var/lib/diletantback/data
+#        environment:
+#            TZ: Europe/Moscow
+#            SPRING_PROFILES_INCLUDE: prod
+#    postgres-exporter:
+#        image: bitnami/postgres-exporter:0.9.0
+#        depends_on:
+#            - postgres
+#        restart: unless-stopped
+#        ports:
+#            - "10.0.0.0:9187:9187"
+#        volumes:
+#            - ./postgres-exporter/queries.yaml:/var/lib/postgresql/queries.yaml
+#        environment:
+#            - DATA_SOURCE_URI=postgres:5432/diletant_backend?sslmode=disable
+#            - DATA_SOURCE_USER=testdb
+#            - DATA_SOURCE_PASS=testdb
+#            - PG_EXPORTER_EXTEND_QUERY_PATH=/var/lib/postgresql/queries.yaml
+volumes:
+    spring-data:
+    pg-data:
