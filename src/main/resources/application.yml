@@ -1,11 +1,27 @@
 spring:
   jpa:
     hibernate:
+#      validate: validate the schema, makes no changes to the database.
+#      update: update the schema.
+#      create: creates the schema, destroying previous data.
+#      create-drop: drop the schema when the SessionFactory is closed explicitly, typically when the application is stopped.
+#      none: does nothing with the schema, makes no changes to the database
       ddl-auto: create
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-    show-sql: true
-    properties.hibernate.format_sql: true
+#    show-sql: true
+    properties:
+      hibernate:
+#       !! ANTI-PATTERN !! Just for test N+1
+#        enable_lazy_load_no_trans: true
+#       SQL Pretty Print
+        format_sql: true
   datasource:
     url: "jdbc:postgresql://localhost:6006/testdb"
     username: testdb
     password: testdb
+
+logging:
+  level:
+#    SQL statements and parameters
+      org.hibernate.SQL: info
+#    org.hibernate.type.descriptor.sql: trace

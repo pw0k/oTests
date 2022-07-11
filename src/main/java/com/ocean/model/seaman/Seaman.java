@@ -1,17 +1,16 @@
-package com.ocean.model;
+package com.ocean.model.seaman;
 
+import com.ocean.model.BaseEntity;
 import lombok.*;
 
 import javax.persistence.Entity;
 
 @Entity
-//For Entity without collection Data is ok
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Sailboat extends BaseEntity{
+public class Seaman extends BaseEntity {
     String name;
-
 }
